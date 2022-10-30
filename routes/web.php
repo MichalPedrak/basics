@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('test');
+Route::get('/admin/users', function () {
+    return view('admin.users', [
+        'users' => User::paginate(3),
+    ]);
 });
 
 Route::get('/dashboard', function () {
