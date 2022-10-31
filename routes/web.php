@@ -16,9 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/users', function () {
     return view('admin.users', [
-        'users' => User::paginate(3),
+        'users' => User::paginate(10),
     ]);
-});
+})->name('All users');
+
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard');
+})->name('Dashboard');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
