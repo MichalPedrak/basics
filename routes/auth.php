@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
-                ->name('register');
+                ->name('register');   // Odsyła do widoku dla register
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::post('register', [RegisteredUserController::class, 'store']); // Dodaje nam z widoku register
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');

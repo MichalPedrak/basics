@@ -15,7 +15,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="../assets/images/brand/favicon.ico" />
 
     <!-- TITLE -->
-    <title>Sash – Bootstrap 5 Admin & Dashboard Template</title>
+    <title>Just trying to learn :D</title>
 
     <!-- BOOTSTRAP CSS -->
     <link id="style" href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -138,21 +138,21 @@
                                                 Notification</a>
                                         </div>
                                     </div>
-
+                                    @auth
                                     <div class="dropdown d-flex profile-1">
                                         <a href="javascript:void(0)" data-bs-toggle="dropdown" class="nav-link leading-none d-flex">
-                                            <img src="../assets/images/users/21.jpg" alt="profile-user"
+                                            <img src="https://i.pravatar.cc/60/{{ auth()->user()->id }}" alt="profile-user"
                                                  class="avatar  profile-user brround cover-image">
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                             <div class="drop-heading">
                                                 <div class="text-center">
-                                                    <h5 class="text-dark mb-0 fs-14 fw-semibold">Percy Kewshun</h5>
-                                                    <small class="text-muted">Senior Admin</small>
+                                                    <h5 class="text-dark mb-0 fs-14 fw-semibold">{{ auth()->user()->name }}</h5>
+                                                    <small class="text-muted">{{ auth()->user()->is_admin ? 'Admin' : 'Normal User'}}</small>
                                                 </div>
                                             </div>
                                             <div class="dropdown-divider m-0"></div>
-                                            <a class="dropdown-item" href="profile.html">
+                                            <a class="dropdown-item" href="/users/{{ auth()->user()->id }}">
                                                 <i class="dropdown-icon fe fe-user"></i> Profile
                                             </a>
                                             <a class="dropdown-item" href="email-inbox.html">
@@ -162,11 +162,14 @@
                                             <a class="dropdown-item" href="lockscreen.html">
                                                 <i class="dropdown-icon fe fe-lock"></i> Lockscreen
                                             </a>
-                                            <a class="dropdown-item" href="login.html">
-                                                <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
-                                            </a>
+                                            <form method="post" action="/logout">
+                                                <button class="dropdown-icon fe fe-alert-circle" submit>Log out</button>
+                                            </form>
                                         </div>
                                     </div>
+                                    @elseauth
+                                    <a href="/login">Login</a> or <a href="/register">Sign up</a>
+                                    @endauth
                                 </div>
                             </div>
                         </div>
@@ -199,15 +202,10 @@
                             <a class="side-menu__item has-link" data-bs-toggle="slide" href="/admin/dashboard"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
                         </li>
                         <li class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)"><i class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Users</span><i class="angle fe fe-chevron-right"></i></a>
-                            <ul class="slide-menu">
-                                <li class="side-menu-label1"><a href="javascript:void(0)">Authentication</a></li>
-                                <li><a href="/admin/users" class="slide-item"> All users</a></li>
-                                <li><a href="login.html" class="slide-item"> Login</a></li>
-                                <li><a href="register.html" class="slide-item"> Register</a></li>
-                                <li><a href="forgot-password.html" class="slide-item"> Forgot Password</a></li>
-                                <li><a href="lockscreen.html" class="slide-item"> Lock screen</a></li>
-                            </ul>
+                            <a class="side-menu__item" data-bs-toggle="slide" href="/admin/users"><i class="side-menu__icon fe fe-users"></i><span class="side-menu__label">Users</span></a>
+                        </li>
+                        <li class="slide">
+                            <a class="side-menu__item" data-bs-toggle="slide" href="/tweets"><i class="side-menu__icon fa fa-twitter"></i><span class="side-menu__label">Tweets</span></a>
                         </li>
 
                     </ul>

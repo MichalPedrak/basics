@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-class LoginRequest extends FormRequest
+class LoginRequest extends FormRequest  // walidacja
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize()  //  czy użytkownik może użyć więcej requestów
     {
         return true;
     }
@@ -43,7 +43,7 @@ class LoginRequest extends FormRequest
      */
     public function authenticate()
     {
-        $this->ensureIsNotRateLimited();
+        $this->ensureIsNotRateLimited();  // sprawdza czy nie przyszło zbyt wiele requestów od jednego użytkownika
 
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
@@ -65,7 +65,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited()
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) { // sprawdza ilość prób - ile jest requestów z jednego emaila
             return;
         }
 
@@ -73,7 +73,7 @@ class LoginRequest extends FormRequest
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
-        throw ValidationException::withMessages([
+        throw ValidationException::withMessages([ // wywołuje po 5 razach, email nie moze nic zrobić, żadnych requestów przez 60 sekund
             'email' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),

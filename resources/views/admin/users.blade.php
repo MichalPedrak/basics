@@ -1,4 +1,4 @@
-<x-layout>
+<x-main.layout>
 
                     <!-- ROW OPEN -->
                     <div class="row row-cards">
@@ -40,7 +40,7 @@
 {{--                                                    </div>--}}
 {{--                                                </td>--}}
                                                 <td class="align-middle text-center"><img alt="image" class="avatar avatar-md br-7" src="https://i.pravatar.cc/60/{{ $user->id }}"></td>
-                                                <td class="text-nowrap align-middle">{{ $user->name }}</td>
+                                                <td class="text-nowrap align-middle"><a href="/users/{{ $user->id }}">{{ $user->name }}</a></td>
                                                 <td class="text-nowrap align-middle"><span>{{ $user->created_at->diffForHumans() }}</span></td>
                                                 <td class="text-nowrap align-middle text-center "><span>{{ $user->is_admin }}</span></td>
 
@@ -66,4 +66,4 @@
                     </div>
                     <!-- ROW CLOSED -->
 
-</x-layout>
+</x-main.layout>

@@ -14,9 +14,9 @@ class EmailVerificationPromptController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request) // tylko jedna akcja, w invoke
     {
-        return $request->user()->hasVerifiedEmail()
+        return $request->user()->hasVerifiedEmail() // sprawdza czy user jest verified, jesli tak to dashboard jesli nie to verify email page
                     ? redirect()->intended(RouteServiceProvider::HOME)
                     : view('auth.verify-email');
     }

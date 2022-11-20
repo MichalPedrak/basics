@@ -28,9 +28,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
+        $request->authenticate();  // waliduje i sprawdza ilość prób
 
-        $request->session()->regenerate();
+        $request->session()->regenerate(); // regeneruje nam nową sesję, z użytkownikiem podanym w tym requescie
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

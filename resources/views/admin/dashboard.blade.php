@@ -1,3 +1,3 @@
-<x-layout>
-    Siemkassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-</x-layout>
+<x-main.layout>
+    Cześć oto ja
+</x-main.layout>
