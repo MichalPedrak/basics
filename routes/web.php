@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Tweet;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -21,25 +20,12 @@ Route::get('/admin/users', function () {
     ]);
 })->name('All users');
 
-Route::get('/users/{user}', function (User $user) {
-    return view('users.index', [
-        'user' => $user,
-        'tweets' => $user->tweets,
-    ]);
-})->name('Single User');
-
-Route::get('/tweets', function () {
-    return view('features.tweets', [
-        'tweets' => Tweet::latest()->get(),
-    ]);
-})->name('Single User');
-
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->name('Dashboard');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard'); // musi być zalogowany i zweryfikowany
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/auth.php'; // file with other routes
+require __DIR__.'/auth.php'; // Wymaga plik auth.php gdzie jest reszta routerow
