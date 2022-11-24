@@ -90,6 +90,11 @@
                                                     <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
                                                 </a>
                                                 <input required autofocus class="input100 border-start-0 form-control ms-0" type="password" placeholder="Password" name="password">
+                                                <ul>
+                                                    @foreach($errors->get('password') as $error):
+                                                    <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
                                             </div>
                                             <!-- FORGOT PASSWORD-->
                                             @if (Route::has('password.request'))

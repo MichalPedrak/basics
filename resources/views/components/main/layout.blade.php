@@ -57,6 +57,7 @@
                         <img src="../assets/images/brand/logo-3.png" class="header-brand-img light-logo1"
                              alt="logo">
                     </a>
+
                     <div class="d-flex order-lg-2 ms-auto header-right-icons">
                         <div class="navbar navbar-collapse responsive-navbar p-0">
                             <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
@@ -74,6 +75,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @auth
                                     <div class="d-flex country">
                                         <a class="nav-link icon theme-layout nav-link-bg layout-setting">
                                             <span class="dark-layout"><i class="fe fe-moon"></i></span>
@@ -92,53 +94,31 @@
                                                 </div>
                                             </div>
                                             <div class="notifications-menu">
-                                                <a class="dropdown-item d-flex" href="notify-list.html">
-                                                    <div class="me-3 notifyimg  bg-primary brround box-shadow-primary">
-                                                        <i class="fe fe-mail"></i>
-                                                    </div>
-                                                    <div class="mt-1 wd-80p">
-                                                        <h5 class="notification-label mb-1">New Application received
-                                                        </h5>
-                                                        <span class="notification-subtext">3 days ago</span>
-                                                    </div>
-                                                </a>
-                                                <a class="dropdown-item d-flex" href="notify-list.html">
-                                                    <div class="me-3 notifyimg  bg-secondary brround box-shadow-secondary">
-                                                        <i class="fe fe-check-circle"></i>
-                                                    </div>
-                                                    <div class="mt-1 wd-80p">
-                                                        <h5 class="notification-label mb-1">Project has been
-                                                            approved</h5>
-                                                        <span class="notification-subtext">2 hours ago</span>
-                                                    </div>
-                                                </a>
-                                                <a class="dropdown-item d-flex" href="notify-list.html">
-                                                    <div class="me-3 notifyimg  bg-success brround box-shadow-success">
-                                                        <i class="fe fe-shopping-cart"></i>
-                                                    </div>
-                                                    <div class="mt-1 wd-80p">
-                                                        <h5 class="notification-label mb-1">Your Product Delivered
-                                                        </h5>
-                                                        <span class="notification-subtext">30 min ago</span>
-                                                    </div>
-                                                </a>
-                                                <a class="dropdown-item d-flex" href="notify-list.html">
-                                                    <div class="me-3 notifyimg bg-pink brround box-shadow-pink">
-                                                        <i class="fe fe-user-plus"></i>
-                                                    </div>
-                                                    <div class="mt-1 wd-80p">
-                                                        <h5 class="notification-label mb-1">Friend Requests</h5>
-                                                        <span class="notification-subtext">1 day ago</span>
-                                                    </div>
-                                                </a>
+                                                @if(session('success'))
+                                                    <x-template.notify :status="'success'" :time="'2 days ago'">
+                                                        Your post has been created
+                                                    </x-template.notify>
+                                                @endif
+                                                <x-template.notify :status="'email'" :time="'2 days ago'">
+                                                    You got new email
+                                                </x-template.notify>
+                                                <x-template.notify :status="'project-completed'" :time="'3 days ago'">
+                                                    Project is completed
+                                                </x-template.notify>
+                                                <x-template.notify :status="'product-delivered'" :time="'4 days ago'">
+                                                    Your product is delivered
+                                                </x-template.notify>
+                                                <x-template.notify :status="'friend-request'" :time="'5 days ago'">
+                                                    You got new friend request
+                                                </x-template.notify>
                                             </div>
                                             <div class="dropdown-divider m-0"></div>
-                                            <a href="notify-list.html"
+                                            <a href="/notify-list"
                                                class="dropdown-item text-center p-3 text-muted">View all
                                                 Notification</a>
                                         </div>
                                     </div>
-                                    @auth
+
                                     <div class="dropdown d-flex profile-1">
                                         <a href="javascript:void(0)" data-bs-toggle="dropdown" class="nav-link leading-none d-flex">
                                             <img src="https://i.pravatar.cc/60/{{ auth()->user()->id }}" alt="profile-user"
@@ -155,20 +135,18 @@
                                             <a class="dropdown-item" href="/users/{{ auth()->user()->id }}">
                                                 <i class="dropdown-icon fe fe-user"></i> Profile
                                             </a>
-                                            <a class="dropdown-item" href="email-inbox.html">
-                                                <i class="dropdown-icon fe fe-mail"></i> Inbox
-                                                <span class="badge bg-danger rounded-pill float-end">5</span>
-                                            </a>
-                                            <a class="dropdown-item" href="lockscreen.html">
-                                                <i class="dropdown-icon fe fe-lock"></i> Lockscreen
-                                            </a>
-                                            <form method="post" action="/logout">
-                                                <button class="dropdown-icon fe fe-alert-circle" submit>Log out</button>
+
+                                            <form method="post" action="{{ route('logout') }}">
+                                                @csrf
+
+                                                    <a class="dropdown-item">
+                                                        <i class="dropdown-icon fa fa-sign-out"></i> <button style="background: none; border: none; color: white;" type="submit">Log out</button>
+                                                    </a>
                                             </form>
                                         </div>
                                     </div>
-                                    @elseauth
-                                    <a href="/login">Login</a> or <a href="/register">Sign up</a>
+                                    @else
+                                        <button class="btn btn-primary white-text-btn"><a href="{{ route('login') }}">Login</a></button><button class="btn btn-primary white-text-btn"><a href="{{ route('register') }}">Sign up</a></button>
                                     @endauth
                                 </div>
                             </div>

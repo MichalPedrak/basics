@@ -19,7 +19,7 @@ Route::get('/admin/users', function () {
     return view('admin.users', [
         'users' => User::paginate(10),
     ]);
-})->name('All users');
+})->name('All users')->middleware('auth');
 
 Route::get('/users/{user}', function (User $user) {
     return view('users.index', [
@@ -36,10 +36,29 @@ Route::get('/tweets', function () {
 
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
-})->name('Dashboard');
+})->name('Dashboard')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard'); // musi być zalogowany i zweryfikowany
 
+
+Route::post('/tweets/store', function(){
+
+    $attributes = request()->validate([
+        'title' => 'required',
+        'body' => 'required',
+
+    ]);
+    $attributes['user_id'] = auth()->id();
+    $attributes['likes'] = 0;
+
+    Tweet::create($attributes);
+
+    return redirect("/tweets")->with('success', 'Stworzono post');
+
+
+})->name('add_tweet')->middleware('auth');
+
 require __DIR__.'/auth.php'; // file with other routes
+

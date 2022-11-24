@@ -53,15 +53,23 @@
                 <div class="col-xl-6">
                     <div class="card">
                         <div class="card-body">
-                            <form class="profile-edit">
-                                <textarea class="form-control" placeholder="What's in your mind right now" rows="7"></textarea>
+                            <form class="profile-edit" method="post" action="{{ route('add_tweet') }}">
+                                @csrf
+                                <input :value="old('title')" required autofocus class="input100 border-start-0 form-control ms-0" type="text" placeholder="Title" name="title">
+                                <textarea class="form-control" placeholder="What's in your mind right now" rows="7" name="body"></textarea>
                                 <div class="profile-share border-top-0">
                                     <div class="mt-2">
                                         <a href="javascript:void(0)" class="me-2" title="Audio" data-bs-toggle="tooltip" data-bs-placement="top"><span class="text-muted"><i class="fe fe-mic"></i></span></a>
                                         <a href="javascript:void(0)" class="me-2" title="Video" data-bs-toggle="tooltip" data-bs-placement="top"><span class="text-muted"><i class="fe fe-video"></i></span></a>
                                         <a href="javascript:void(0)" class="me-2" title="Image" data-bs-toggle="tooltip" data-bs-placement="top"><span class="text-muted"><i class="fe fe-image"></i></span></a>
                                     </div>
-                                    <button class="btn btn-sm btn-success ms-auto"><i class="fa fa-share ms-1"></i> Share</button>
+                                    <button class="btn btn-sm btn-success ms-auto" type="submit"><i class="fa fa-share ms-1"></i> Share</button>
+                                    @error('title')
+                                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                    @error('body')
+                                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </form>
                         </div>
